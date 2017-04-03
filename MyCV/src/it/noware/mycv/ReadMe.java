@@ -78,7 +78,7 @@ public class ReadMe {
 				+ "In the restaurant, the user scan the QR-Code placed on the seats and had to find his name in a "
 				+ "Word Search Game, and solve other games."
 				+ "The game is currently under development but will be soon available here: "
-				+ "https://play.google.com/store/apps/details?id=com.noware.dipaologna");
+				+ "https://play.google.com/store/apps/details?id=com.noware.matrimonioivanevale");
 		dipaologna.addTecnology("Android SDK").addTecnology("GIMP");
 		indieProjects.add(dipaologna);
 
