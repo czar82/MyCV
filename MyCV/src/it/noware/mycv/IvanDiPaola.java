@@ -27,6 +27,7 @@ public enum IvanDiPaola {
 	private List<Education> educations;
 	private List<Language> languages;
 	private List<String> hobbies;
+	private final Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").setPrettyPrinting().disableHtmlEscaping().registerTypeAdapter(IvanDiPaola.class, new IvanDiPaolaAdapter()).create();
 
 	public List<WorkExperience> getWorkExperiences() {
 		return workExperiences;
@@ -77,24 +78,19 @@ public enum IvanDiPaola {
 		return "Ivan Di Paola\n\n" + workExperiences + "\n\n"+ educations + "\n\n" + languages;
 	}
 
-	Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").setPrettyPrinting().disableHtmlEscaping().registerTypeAdapter(IvanDiPaola.class, new IvanDiPaolaAdapter()).create();
 	private class IvanDiPaolaAdapter implements JsonSerializer<IvanDiPaola> {
-
 		@Override
 		public JsonElement serialize(IvanDiPaola src, Type typeOfSrc,
 				JsonSerializationContext context)
 		{
-
 			JsonObject obj = new JsonObject();
 			JsonParser parser = new JsonParser();
 			obj.add("workExperience", parser.parse(gson.toJson(src.getWorkExperiences())) );
 			obj.add("educations", parser.parse(gson.toJson(src.getEducations())) );
 			obj.add("languages", parser.parse(gson.toJson(src.getLanguages())) );
 			obj.add("hobbies", parser.parse(gson.toJson(src.getHobbies())) );
-
 			return obj;
 		}
-
 	}
 	
 	public String getJson()
