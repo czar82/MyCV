@@ -1,9 +1,16 @@
 package it.noware.mycv;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 /**
  * This is a singleton of myself, I've just an instance, no more me.
@@ -29,7 +36,7 @@ public enum IvanDiPaola {
 			workExperiences = new ArrayList<WorkExperience>();
 		}
 		workExperiences.add(workExperience);
-		return this;
+		return INSTANCE;
 	}
 
 	public List<Education> getEducations() {
@@ -40,7 +47,7 @@ public enum IvanDiPaola {
 			educations = new ArrayList<Education>();
 		}
 		educations.add(education);
-		return this;
+		return INSTANCE;
 	}
 
 	public List<Language> getLanguages() {
@@ -51,7 +58,7 @@ public enum IvanDiPaola {
 			languages = new ArrayList<Language>();
 		}
 		languages.add(language);
-		return this;
+		return INSTANCE;
 	}
 
 	public List<String> getHobbies() {
@@ -62,16 +69,36 @@ public enum IvanDiPaola {
 			hobbies = new ArrayList<String>();
 		}
 		hobbies.add(hobby);
-		return this;
+		return INSTANCE;
 	}
 
 	@Override
 	public String toString() {
 		return "Ivan Di Paola\n\n" + workExperiences + "\n\n"+ educations + "\n\n" + languages;
 	}
+
+	Gson gson = new GsonBuilder().setDateFormat("dd/MM/yyyy").setPrettyPrinting().disableHtmlEscaping().registerTypeAdapter(IvanDiPaola.class, new IvanDiPaolaAdapter()).create();
+	private class IvanDiPaolaAdapter implements JsonSerializer<IvanDiPaola> {
+
+		@Override
+		public JsonElement serialize(IvanDiPaola src, Type typeOfSrc,
+				JsonSerializationContext context)
+		{
+
+			JsonObject obj = new JsonObject();
+			JsonParser parser = new JsonParser();
+			obj.add("workExperience", parser.parse(gson.toJson(src.getWorkExperiences())) );
+			obj.add("educations", parser.parse(gson.toJson(src.getEducations())) );
+			obj.add("languages", parser.parse(gson.toJson(src.getLanguages())) );
+			obj.add("hobbies", parser.parse(gson.toJson(src.getHobbies())) );
+
+			return obj;
+		}
+
+	}
 	
 	public String getJson()
 	{
-		return new GsonBuilder().setDateFormat("dd/MM/yyyy").setPrettyPrinting().disableHtmlEscaping().create().toJson(workExperiences);
+		return gson.toJson(INSTANCE);
 	}
 }

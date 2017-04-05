@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonParser;
+
 /**
  * This class contains a main. You can run it to see my Json formatted CV.
  * 
@@ -147,7 +151,6 @@ public class ReadMe {
 		//							HOBBIES
 		//************************************************************************
 		ivan.addHobby("Beach Volley").addHobby("Android developing").addHobby("History").addHobby("Strategy video games");
-
 
 		System.out.println(ivan.getJson());
 	}
